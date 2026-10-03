@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { SendHorizontal } from "lucide-react";
 import { markConversationRead, sendMessage } from "@/lib/actions/messages";
@@ -42,6 +43,8 @@ export function MessageThread({
   const messages = useMemo(() => mergeMessages(liveMessages, initialMessages), [liveMessages, initialMessages]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [now, setNow] = useState(() => new Date());
+  const [realtimeReady, setRealtimeReady] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (hasUnread) void markConversationRead(conversationId);
@@ -61,11 +64,21 @@ export function MessageThread({
           if (message.sender_id !== currentUserId) void markConversationRead(conversationId);
         },
       )
-      .subscribe();
+      .subscribe((status) => setRealtimeReady(status === "SUBSCRIBED"));
     return () => {
       void supabase.removeChannel(channel);
     };
   }, [conversationId, currentUserId]);
+
+  // Repli si le temps réel est indisponible (réseau qui bloque les WebSockets…) :
+  // la conversation est rechargée régulièrement tant que l'onglet est visible.
+  useEffect(() => {
+    if (realtimeReady) return;
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible") router.refresh();
+    }, 8_000);
+    return () => clearInterval(timer);
+  }, [realtimeReady, router]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ block: "end" });
