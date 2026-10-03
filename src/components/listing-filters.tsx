@@ -65,7 +65,7 @@ export function ListingFilters({ values, activeCount }: { values: FilterValues; 
 
       <div
         id="filtres-avances"
-        className={cn("mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5", mobileOpen ? undefined : "max-lg:hidden")}
+        className={cn("mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 [&>*]:min-w-0", mobileOpen ? undefined : "max-lg:hidden")}
       >
         <div>
           <Label htmlFor="type">Type de palette</Label>

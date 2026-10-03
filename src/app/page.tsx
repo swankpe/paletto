@@ -56,14 +56,14 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
       {/* Hero */}
       <section className="wood-texture relative overflow-hidden border-b border-stone-200/70">
         <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-[1.15fr_1fr] lg:py-24">
-          <div>
+          <div className="min-w-0">
             <p className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-sm font-semibold text-brand-800">
               <Sparkles className="size-4" aria-hidden />
               100 % gratuit, sans commission
             </p>
             <h1 className="mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               Vos palettes méritent
-              <span className="relative whitespace-nowrap text-brand-600"> une seconde vie</span>.
+              <span className="relative text-brand-600 sm:whitespace-nowrap"> une seconde vie</span>.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-stone-600">
               Achetez, vendez ou donnez des palettes en bois près de chez vous. Paletto met en relation les
@@ -76,7 +76,7 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
               role="search"
               className="mt-8 flex max-w-2xl flex-col gap-2 rounded-2xl border border-stone-200 bg-white p-2 shadow-card sm:flex-row sm:items-center"
             >
-              <label className="flex flex-1 items-center gap-2 px-3">
+              <label className="flex min-w-0 flex-1 items-center gap-2 px-3">
                 <Search className="size-5 shrink-0 text-stone-400" aria-hidden />
                 <span className="sr-only">Que recherchez-vous ?</span>
                 <input
@@ -92,7 +92,7 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
                 <select
                   name="dept"
                   defaultValue=""
-                  className="h-11 w-full bg-transparent text-[15px] text-stone-700 focus:outline-none sm:w-44"
+                  className="h-11 w-full min-w-0 bg-transparent text-[15px] text-stone-700 focus:outline-none sm:w-44"
                 >
                   <option value="">Toute la France</option>
                   {DEPARTMENTS.map((d) => (
