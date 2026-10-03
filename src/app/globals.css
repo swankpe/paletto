@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-bricolage), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --color-cream: #fbf8f3;
+  --color-sand: #f4ede2;
+
+  --color-brand-50: #fdf6ee;
+  --color-brand-100: #f9e8d4;
+  --color-brand-200: #f2cfa6;
+  --color-brand-300: #e9af70;
+  --color-brand-400: #df8f43;
+  --color-brand-500: #d47524;
+  --color-brand-600: #b95c1a;
+  --color-brand-700: #994518;
+  --color-brand-800: #7c3819;
+  --color-brand-900: #662f18;
+  --color-brand-950: #3a160a;
+
+  --color-forest-50: #f0f7f2;
+  --color-forest-100: #dcede1;
+  --color-forest-200: #bbdbc6;
+  --color-forest-300: #8ec1a3;
+  --color-forest-400: #5fa17c;
+  --color-forest-500: #3e855f;
+  --color-forest-600: #2d6a4a;
+  --color-forest-700: #25553d;
+  --color-forest-800: #1f4432;
+  --color-forest-900: #1a382a;
+  --color-forest-950: #0d1f17;
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+
+  --shadow-card: 0 1px 2px rgb(28 25 23 / 0.04), 0 4px 16px -4px rgb(28 25 23 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(28 25 23 / 0.06), 0 12px 32px -8px rgb(28 25 23 / 0.16);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-cream text-stone-800 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-stone-900;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-brand-950;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .wood-texture {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgb(212 117 36 / 0.05) 0px,
+        rgb(212 117 36 / 0.05) 2px,
+        transparent 2px,
+        transparent 18px
+      ),
+      radial-gradient(circle at 20% 0%, rgb(233 175 112 / 0.35), transparent 55%),
+      radial-gradient(circle at 100% 60%, rgb(142 193 163 / 0.25), transparent 50%);
+  }
+
+  .prose-paletto {
+    @apply space-y-4 text-stone-700 leading-relaxed;
+  }
+  .prose-paletto h2 {
+    @apply mt-10 text-2xl font-semibold;
+  }
+  .prose-paletto h3 {
+    @apply mt-6 text-lg font-semibold;
+  }
+  .prose-paletto ul {
+    @apply list-disc space-y-1 pl-6;
+  }
+  .prose-paletto a {
+    @apply font-medium text-brand-700 underline underline-offset-2 hover:text-brand-800;
+  }
+}
