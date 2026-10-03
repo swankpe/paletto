@@ -68,6 +68,14 @@ export async function signUp(_prev: FormState, formData: FormData): Promise<Form
     if (error.status === 429 || error.code === "over_email_send_rate_limit") {
       return { error: "Trop d'inscriptions en peu de temps. Réessayez dans quelques minutes.", values };
     }
+    if (error.code === "email_address_not_authorized" || error.code === "unexpected_failure") {
+      console.error("[inscription] envoi de l'e-mail de confirmation impossible :", error.code, error.message);
+      return {
+        error: "Les inscriptions sont momentanément indisponibles (envoi d'e-mail impossible). Réessayez plus tard.",
+        values,
+      };
+    }
+    console.error("[inscription] échec :", error.code, error.message);
     return { error: "L'inscription a échoué. Vérifiez vos informations et réessayez.", values };
   }
 
