@@ -1,22 +1,28 @@
-const euro = new Intl.NumberFormat("fr-FR", {
+const euroWhole = new Intl.NumberFormat("fr-FR", {
   style: "currency",
   currency: "EUR",
-  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
+const euroCents = new Intl.NumberFormat("fr-FR", {
+  style: "currency",
+  currency: "EUR",
+  minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
-export function formatPrice(cents: number) {
-  if (cents === 0) return "Gratuit";
-  return euro.format(cents / 100);
+/** 6 € pour un montant rond, 5,50 € dès qu'il y a des centimes. */
+function formatEuros(cents: number) {
+  return cents % 100 === 0 ? euroWhole.format(cents / 100) : euroCents.format(cents / 100);
 }
 
-export function formatUnitPrice(cents: number) {
+export function formatPrice(cents: number) {
   if (cents === 0) return "Gratuit";
-  return `${euro.format(cents / 100)} / palette`;
+  return formatEuros(cents);
 }
 
 export function formatTotalPrice(cents: number, quantity: number) {
-  return euro.format((cents * quantity) / 100);
+  return formatEuros(cents * quantity);
 }
 
 const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
