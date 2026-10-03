@@ -201,7 +201,7 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
                   <ArrowRight className="size-4" aria-hidden />
                 </Link>
               </div>
-              <PalletIllustration className="hidden aspect-square rounded-2xl md:flex" />
+              <PalletIllustration className="aspect-square rounded-2xl max-md:hidden" />
             </div>
           )}
         </div>

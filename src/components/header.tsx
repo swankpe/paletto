@@ -55,12 +55,12 @@ export async function Header() {
               </div>
             </>
           ) : (
-            <Link href="/connexion" className={buttonClasses({ variant: "ghost", size: "sm", className: "hidden md:inline-flex" })}>
+            <Link href="/connexion" className={buttonClasses({ variant: "ghost", size: "sm", className: "max-md:hidden" })}>
               Se connecter
             </Link>
           )}
 
-          <Link href="/deposer" className={buttonClasses({ size: "sm", className: "hidden sm:inline-flex" })}>
+          <Link href="/deposer" className={buttonClasses({ size: "sm", className: "max-sm:hidden" })}>
             <Plus className="size-4" aria-hidden />
             Déposer une annonce
           </Link>
