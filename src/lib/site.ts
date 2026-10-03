@@ -1,9 +1,16 @@
+function resolveSiteUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  // Domaine de production fourni automatiquement par Vercel.
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
+
 export const siteConfig = {
   name: "Paletto",
   tagline: "Les palettes passent de main en main",
   description:
     "Paletto est la place de marché des palettes entre particuliers : achetez, vendez ou donnez vos palettes en bois près de chez vous, gratuitement et sans intermédiaire.",
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  url: resolveSiteUrl().replace(/\/$/, ""),
   locale: "fr_FR",
   // Informations légales de l'éditeur — à compléter avant l'ouverture au public.
   legal: {
