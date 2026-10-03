@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { refresh, revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "../auth";
 import { createClient } from "../supabase/server";
@@ -63,4 +63,6 @@ export async function markConversationRead(conversationId: string) {
   if (!user || !isUuid(conversationId)) return;
   const supabase = await createClient();
   await supabase.rpc("mark_conversation_read", { p_conversation_id: conversationId });
+  // Met à jour le badge « messages non lus » de l'en-tête.
+  refresh();
 }

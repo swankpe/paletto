@@ -258,14 +258,3 @@ export async function getFavoriteListings(userId: string) {
     .map((row) => row.listing as unknown as ListingCardData | null)
     .filter((listing): listing is ListingCardData => Boolean(listing));
 }
-
-export async function getSitemapListings() {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("listings")
-    .select("id, updated_at")
-    .in("status", ["active", "reserved"])
-    .order("updated_at", { ascending: false })
-    .limit(5000);
-  return data ?? [];
-}

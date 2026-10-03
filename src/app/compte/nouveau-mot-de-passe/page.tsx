@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { AuthShell } from "@/components/auth-shell";
 import { NewPasswordForm } from "@/components/auth-forms";
+import { Card, PageHeader } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -11,8 +11,14 @@ export const metadata: Metadata = {
 export default async function NewPasswordPage() {
   await requireUser("/compte/nouveau-mot-de-passe");
   return (
-    <AuthShell title="Choisissez un nouveau mot de passe" subtitle="8 caractères minimum. Évitez de réutiliser un ancien mot de passe.">
-      <NewPasswordForm />
-    </AuthShell>
+    <div className="max-w-lg space-y-8">
+      <PageHeader
+        title="Nouveau mot de passe"
+        description="8 caractères minimum. Évitez de réutiliser un ancien mot de passe."
+      />
+      <Card className="p-6 sm:p-8">
+        <NewPasswordForm />
+      </Card>
+    </div>
   );
 }

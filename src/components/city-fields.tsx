@@ -16,14 +16,12 @@ export function CityFields({
 }) {
   const [postalCode, setPostalCode] = useState(defaultPostalCode);
   const [city, setCity] = useState(defaultCity);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [lookup, setLookup] = useState<{ postalCode: string; names: string[] } | null>(null);
+  const suggestions = lookup?.postalCode === postalCode ? lookup.names : [];
   const listId = useId();
 
   useEffect(() => {
-    if (!/^\d{5}$/.test(postalCode)) {
-      setSuggestions([]);
-      return;
-    }
+    if (!/^\d{5}$/.test(postalCode)) return;
     const controller = new AbortController();
     fetch(`https://geo.api.gouv.fr/communes?codePostal=${postalCode}&fields=nom&format=json`, {
       signal: controller.signal,
@@ -31,10 +29,12 @@ export function CityFields({
       .then((res) => (res.ok ? res.json() : []))
       .then((communes: Commune[]) => {
         const names = communes.map((c) => c.nom).sort((a, b) => a.localeCompare(b, "fr"));
-        setSuggestions(names);
+        setLookup({ postalCode, names });
         setCity((current) => (names.length === 1 && !current ? names[0] : current));
       })
-      .catch(() => setSuggestions([]));
+      .catch(() => {
+        // API indisponible : la saisie libre de la ville reste possible.
+      });
     return () => controller.abort();
   }, [postalCode]);
 

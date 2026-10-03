@@ -7,19 +7,20 @@ import { ChevronDown, Heart, LayoutList, LogOut, MessageCircle, UserRound } from
 import { signOut } from "@/lib/actions/auth";
 
 export function UserMenu({ displayName }: { displayName: string }) {
-  const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  useEffect(() => setOpen(false), [pathname]);
+  // Le menu se ferme automatiquement lors d'un changement de page.
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const open = openedOn === pathname;
+  const setOpen = (value: boolean) => setOpenedOn(value ? pathname : null);
 
   useEffect(() => {
     if (!open) return;
     function onClick(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(event.target as Node)) setOpenedOn(null);
     }
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") setOpenedOn(null);
     }
     document.addEventListener("mousedown", onClick);
     document.addEventListener("keydown", onKey);
@@ -35,7 +36,7 @@ export function UserMenu({ displayName }: { displayName: string }) {
     <div ref={ref} className="relative">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-haspopup="menu"
         className="flex h-10 items-center gap-2 rounded-full pl-1 pr-3 text-sm font-semibold text-stone-800 hover:bg-stone-900/5"

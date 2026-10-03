@@ -16,10 +16,11 @@ export function MobileMenu({
   displayName: string;
   unread: number;
 }) {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => setOpen(false), [pathname]);
+  // Le menu reste ouvert tant qu'on ne change pas de page.
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const open = openedOn === pathname;
+  const setOpen = (value: boolean) => setOpenedOn(value ? pathname : null);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
